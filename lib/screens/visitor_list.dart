@@ -1,8 +1,8 @@
 // visitor_list.dart
 
 import 'package:flutter/material.dart';
-import 'db_helper.dart';
-import 'visitor_table.dart';
+import '../services/db_helper.dart';
+import '../models/visitor.dart';
 
 class VisitorList extends StatefulWidget {
   @override
@@ -20,8 +20,15 @@ class _VisitorListState extends State<VisitorList> {
   }
 
   void _checkOutVisitor(Visitor visitor) async {
-    visitor.checkOut = DateTime.now().toIso8601String();
-    await DBHelper().updateVisitor(visitor);
+    final updatedVisitor = Visitor(
+      id: visitor.id,
+      name: visitor.name,
+      contact: visitor.contact,
+      purpose: visitor.purpose,
+      checkIn: visitor.checkIn,
+      checkOut: DateTime.now().toIso8601String(),
+    );
+    await DBHelper().updateVisitor(updatedVisitor);
     _loadVisitors();
   }
 
@@ -44,8 +51,8 @@ class _VisitorListState extends State<VisitorList> {
               title: Text(visitor.name),
               subtitle: Text('Purpose: ${visitor.purpose}\n'
                   'Check-In: ${visitor.checkIn}\n'
-                  'Check-Out: ${visitor.checkOut ?? 'Still inside'}'),
-              trailing: visitor.checkOut == null
+                  'Check-Out: ${visitor.checkOut.isEmpty ? 'Still inside' : visitor.checkOut}'),
+              trailing: visitor.checkOut.isEmpty
                   ? IconButton(
                       icon: Icon(Icons.exit_to_app),
                       onPressed: () => _checkOutVisitor(visitor),

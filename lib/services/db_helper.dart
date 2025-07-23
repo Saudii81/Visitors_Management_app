@@ -2,7 +2,8 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'visitor_table.dart';
+import '../models/visitor_table.dart';
+import '../models/visitor.dart' as visitor_model;
 
 class DBHelper {
   static final DBHelper _instance = DBHelper._internal();
@@ -37,19 +38,19 @@ class DBHelper {
     );
   }
 
-  Future<int> insertVisitor(Visitor visitor) async {
+  Future<int> insertVisitor(visitor_model.Visitor visitor) async {
     final dbClient = await db;
     return await dbClient.insert(tableVisitor, visitor.toMap());
   }
 
-  Future<List<Visitor>> getVisitors() async {
+  Future<List<visitor_model.Visitor>> getVisitors() async {
     final dbClient = await db;
     final List<Map<String, dynamic>> maps =
         await dbClient.query(tableVisitor, orderBy: '$columnId DESC');
-    return maps.map((map) => Visitor.fromMap(map)).toList();
+    return maps.map((map) => visitor_model.Visitor.fromMap(map)).toList();
   }
 
-  Future<int> updateVisitor(Visitor visitor) async {
+  Future<int> updateVisitor(visitor_model.Visitor visitor) async {
     final dbClient = await db;
     return await dbClient.update(
       tableVisitor,

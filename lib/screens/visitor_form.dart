@@ -1,8 +1,8 @@
 // visitor_form.dart
 
 import 'package:flutter/material.dart';
-import 'visitor_table.dart';
-import 'db_helper.dart';
+import '../services/db_helper.dart';
+import '../models/visitor.dart';
 
 class VisitorForm extends StatefulWidget {
   @override
@@ -22,6 +22,7 @@ class _VisitorFormState extends State<VisitorForm> {
         contact: _contactController.text,
         purpose: _purposeController.text,
         checkIn: DateTime.now().toIso8601String(),
+        checkOut: '', // Provide default value for checkOut
       );
 
       await DBHelper().insertVisitor(visitor);

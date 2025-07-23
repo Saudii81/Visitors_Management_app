@@ -5,8 +5,8 @@ final String columnId = 'id';
 final String columnName = 'name';
 final String columnContact = 'contact';
 final String columnPurpose = 'purpose';
-final String columnCheckIn = 'check_in_time';
-final String columnCheckOut = 'check_out_time';
+final String columnCheckIn = 'checkIn';
+final String columnCheckOut = 'checkOut';
 
 class Visitor {
   int? id;
