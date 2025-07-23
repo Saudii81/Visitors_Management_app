@@ -1,8 +1,8 @@
 // analytics_view.dart
 
 import 'package:flutter/material.dart';
-import 'db_helper.dart';
-import 'visitor_table.dart';
+import '../services/db_helper.dart';
+import '../models/visitor.dart';
 
 class AnalyticsView extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
     final visitors = await DBHelper().getVisitors();
 
     totalVisitors = visitors.length;
-    visitorsOnSite = visitors.where((v) => v.checkOut == null).length;
+    visitorsOnSite = visitors.where((v) => v.checkOut.isEmpty).length;
 
     purposeCount.clear();
     for (var visitor in visitors) {
