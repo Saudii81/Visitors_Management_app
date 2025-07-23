@@ -1,7 +1,7 @@
 // generate_report.dart
 
-import 'visitor_table.dart';
-import 'db_helper.dart';
+import '../services/db_helper.dart';
+import '../models/visitor.dart';
 
 Future<String> generateVisitorReport() async {
   final visitors = await DBHelper().getVisitors();
@@ -10,7 +10,7 @@ Future<String> generateVisitorReport() async {
   buffer.writeln('ID,Name,Contact,Purpose,Check-In,Check-Out');
   for (var v in visitors) {
     buffer.writeln(
-      '${v.id},"${v.name}","${v.contact}","${v.purpose}","${v.checkIn}","${v.checkOut ?? 'Still inside'}"',
+      '${v.id},"${v.name}","${v.contact}","${v.purpose}","${v.checkIn}","${v.checkOut.isEmpty ? 'Still inside' : v.checkOut}"',
     );
   }
 
